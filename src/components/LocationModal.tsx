@@ -39,8 +39,14 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
   // SDK 로드
   useEffect(() => {
     if (!isOpen || !KAKAO_KEY) return;
-    if (window.kakao?.maps) { setSdkReady(true); return; }
-
+    // services까지 초기화된 경우만 바로 사용
+    if (window.kakao?.maps?.services) { setSdkReady(true); return; }
+    // 스크립트는 로드됐지만 kakao.maps.load()가 아직 안 불린 경우
+    if (window.kakao?.maps) {
+      window.kakao.maps.load(() => setSdkReady(true));
+      return;
+    }
+    // 최초 로드
     const script = document.createElement("script");
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_KEY}&libraries=services&autoload=false`;
     script.onload = () => {
@@ -196,8 +202,8 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   placeholder="장소 또는 주소 검색"
                   className="flex-1 px-3 py-2 rounded-xl outline-none"
-                  style={{ fontSize: "16px" }}
                   style={{
+                    fontSize: "16px",
                     background: "var(--bg)",
                     border: "1px solid var(--border)",
                     color: "var(--text-primary)",
