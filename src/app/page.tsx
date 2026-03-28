@@ -257,6 +257,9 @@ export default function Home() {
             pm25={airQuality.pm25}
             stationName={currentLocation?.name ?? airQuality.stationName}
             isMock={isMock}
+            temp={weatherEnabled && weather ? weather.temp : undefined}
+            humidity={weatherEnabled && weather ? weather.humidity : undefined}
+            basePace={pace}
           />
         </>
       ) : !loading && consent !== null && (

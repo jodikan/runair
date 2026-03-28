@@ -29,6 +29,22 @@ export default function PaceInput({ value, onChange }: Props) {
     }
   }
 
+  function handleBlur() {
+    // "5" 또는 "6" 처럼 분만 입력한 경우 ":00" 자동 보완
+    const trimmed = raw.trim();
+    const normalized = /^\d{1,2}$/.test(trimmed) ? `${trimmed}:00` : trimmed;
+    const parsed = parsePace(normalized);
+    if (parsed) {
+      setError(false);
+      setRaw(formatPace(parsed));
+      onChange(parsed);
+    } else {
+      // 유효하지 않은 입력 → 이전 값으로 복원
+      setError(false);
+      setRaw(formatPace(value));
+    }
+  }
+
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
@@ -38,6 +54,7 @@ export default function PaceInput({ value, onChange }: Props) {
         type="text"
         value={raw}
         onChange={handleChange}
+        onBlur={handleBlur}
         placeholder="5:30"
         className="w-32 text-center rounded-xl border-2 px-3 py-2 outline-none transition-colors"
         style={{

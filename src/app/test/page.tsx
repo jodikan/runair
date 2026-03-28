@@ -144,7 +144,15 @@ export default function TestPage() {
         {/* Result */}
         <section className="flex flex-col items-center gap-2">
           <p className="text-xs font-semibold self-start" style={{ color: "var(--text-secondary)" }}>결과</p>
-          <ResultCard result={result} pm25={pm25} stationName="테스트" isMock={false} />
+          <ResultCard
+            result={result}
+            pm25={pm25}
+            stationName="테스트"
+            isMock={false}
+            temp={weatherEnabled ? temp : undefined}
+            humidity={weatherEnabled ? humidity : undefined}
+            basePace={pace}
+          />
         </section>
 
         {/* Debug */}
