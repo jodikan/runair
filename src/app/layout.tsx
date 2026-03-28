@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bebas_Neue } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -30,6 +31,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
