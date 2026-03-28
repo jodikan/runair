@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RunAir
 
-## Getting Started
+대기질 기반 러닝 페이스 추천 서비스
 
-First, run the development server:
+PM2.5 수치와 기온·습도를 분석해 오늘 달려도 괜찮은지, 어느 페이스로 얼마나 뛰면 좋은지 알려줍니다.
+
+---
+
+## 주요 기능
+
+- 현재 위치 기반 PM2.5 실시간 조회 (에어코리아 API)
+- 기온·습도 보정 옵션 (기상청 API)
+- 위치 직접 검색 (카카오맵 API)
+- 페이스 입력 → 조정 페이스 + 최대 운동 시간 계산
+- 실내 운동 권장 여부 안내
+
+## 기술 스택
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+
+## 로컬 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000) 에서 확인
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 환경변수
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`.env.local` 파일을 생성하고 아래 키를 입력하세요.
 
-## Learn More
+```
+AIRKOREA_API_KEY=에어코리아_API_키
+KMA_API_KEY=기상청_API_키
+NEXT_PUBLIC_KAKAO_MAP_KEY=카카오_JavaScript_키
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 배포
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[runair.vercel.app](https://runair.vercel.app)
