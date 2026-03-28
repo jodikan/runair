@@ -124,11 +124,27 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
       (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
-        const loc = { lat, lng, name: "현재 위치" };
-        setSelected(loc);
-        setQuery("현재 위치");
         placeMarker(lat, lng);
-        setGpsLoading(false);
+
+        // 역지오코딩으로 실제 지역명 조회
+        if (sdkReady && window.kakao?.maps?.services) {
+          const geocoder = new window.kakao.maps.services.Geocoder();
+          geocoder.coord2RegionCode(lng, lat, (result: any[], status: string) => {
+            const name =
+              status === window.kakao.maps.services.Status.OK && result[0]
+                ? `${result[0].region_2depth_name} ${result[0].region_3depth_name}`.trim()
+                : "현재 위치";
+            const loc = { lat, lng, name };
+            setSelected(loc);
+            setQuery(name);
+            setGpsLoading(false);
+          });
+        } else {
+          const loc = { lat, lng, name: "현재 위치" };
+          setSelected(loc);
+          setQuery("현재 위치");
+          setGpsLoading(false);
+        }
       },
       () => setGpsLoading(false)
     );
