@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ─────────────────────────────────────── */
+:root {
+  --bg:      #0f1117;
+  --surface: #1a1d27;
+  --border:  #2a2d3a;
+
+  --text-primary:   #ffffff;
+  --text-secondary: #8b8fa8;
+
+  --grade-great:    #00e5a0;
+  --grade-good:     #a8e063;
+  --grade-moderate: #ffd93d;
+  --grade-bad:      #ff9a3c;
+  --grade-very-bad: #ff4757;
+
+  /* 슬라이더 공통 그라디언트 (수치 올라갈수록 위험) */
+  --slider-gradient: linear-gradient(
+    to right,
+    var(--grade-great),
+    var(--grade-good),
+    var(--grade-moderate),
+    var(--grade-bad),
+    var(--grade-very-bad)
+  );
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: "Pretendard", sans-serif;
+}
+
+/* ── Colored Track Slider ───────────────────────────────── */
+input[type=range].colored-track {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type=range].colored-track::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 12px;
+  border-radius: 9999px;
+}
+input[type=range].colored-track::-moz-range-track {
+  background: transparent;
+  height: 12px;
+  border-radius: 9999px;
+}
+/* 네이티브 썸 완전 투명 — 커스텀 div 썸이 대신 렌더링 */
+input[type=range].colored-track::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+input[type=range].colored-track::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+input[type=range].colored-track.read-only::-webkit-slider-thumb { cursor: default; }
+input[type=range].colored-track.read-only::-moz-range-thumb    { cursor: default; }
