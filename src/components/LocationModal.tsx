@@ -68,6 +68,7 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
     const map = new window.kakao.maps.Map(mapRef.current, { center, level: 4 });
     mapInstance.current = map;
     if (selected) placeMarker(selected.lat, selected.lng, map);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sdkReady, mapReady]);
 
   // showBelow가 true가 되면 지도 div가 마운트됨 → mapReady를 다음 tick에 true로

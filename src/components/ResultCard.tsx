@@ -39,8 +39,7 @@ function buildBreakdown(
   pm25: number,
   basePace: PaceInput | undefined,
   temp: number | undefined,
-  humidity: number | undefined,
-  result: Recommendation
+  humidity: number | undefined
 ): { items: BreakdownItem[]; pm25Capped: boolean } {
   const items: BreakdownItem[] = [];
 
@@ -128,7 +127,7 @@ export default function ResultCard({ result, pm25, stationName, isMock, temp, hu
 
   const showBreakdown = result.pm25Grade !== "indoor" && !(result.maxMinutes === null && result.warning);
   const { items: breakdown } = showBreakdown
-    ? buildBreakdown(result.pm25Grade, pm25, basePace, temp, humidity, result)
+    ? buildBreakdown(result.pm25Grade, pm25, basePace, temp, humidity)
     : { items: [] };
 
   return (
