@@ -195,7 +195,8 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   placeholder="장소 또는 주소 검색"
-                  className="flex-1 text-sm px-3 py-2 rounded-xl outline-none"
+                  className="flex-1 px-3 py-2 rounded-xl outline-none"
+                  style={{ fontSize: "16px" }}
                   style={{
                     background: "var(--bg)",
                     border: "1px solid var(--border)",
