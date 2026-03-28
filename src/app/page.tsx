@@ -268,6 +268,16 @@ export default function Home() {
         </div>
       )}
 
+      {/* 푸터 */}
+      <footer className="mt-8 text-center">
+        <a
+          href="mailto:pjoeun19@gmail.com"
+          className="text-xs text-gray-400 hover:text-gray-200 transition-colors"
+        >
+          문의 · pjoeun19@gmail.com
+        </a>
+      </footer>
+
     </main>
   );
 }
