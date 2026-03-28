@@ -42,8 +42,10 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
     if (window.kakao?.maps) { setSdkReady(true); return; }
 
     const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_KEY}&libraries=services`;
-    script.onload = () => setSdkReady(true);
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_KEY}&libraries=services&autoload=false`;
+    script.onload = () => {
+      window.kakao.maps.load(() => setSdkReady(true));
+    };
     script.onerror = () => console.error("[LocationModal] Kakao SDK 로드 실패");
     document.head.appendChild(script);
   }, [isOpen]);
