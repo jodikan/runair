@@ -174,7 +174,7 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
                 />
                 <button
                   onClick={handleSearch}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold"
+                  className="px-4 py-2 rounded-xl text-sm font-semibold shrink-0 whitespace-nowrap"
                   style={{ background: "var(--grade-great)", color: "#0f1117" }}
                 >
                   검색
