@@ -163,7 +163,7 @@ export default function Home() {
             <div>
               <p className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>위치 정보 수집 동의</p>
               <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                현재 위치 기반으로 대기질과 날씨 정보를 제공합니다.
+                현재 위치 기반으로 대기질과 날씨 정보를 제공합니다.<br />
                 위치 정보는 서버에 저장되지 않습니다.
               </p>
             </div>
@@ -205,14 +205,14 @@ export default function Home() {
       {!showConsent && (
         <button
           onClick={() => setLocationModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm"
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm max-w-xs"
           style={{ background: "var(--surface)", border: "1px solid var(--border)", color: "var(--text-secondary)" }}
         >
-          <span>📍</span>
-          <span style={{ color: "var(--text-primary)" }}>
+          <span className="shrink-0">📍</span>
+          <span className="truncate" style={{ color: "var(--text-primary)" }}>
             {currentLocation ? currentLocation.name : airQuality?.stationName ?? "위치 설정"}
           </span>
-          <span style={{ fontSize: "0.7rem" }}>변경</span>
+          <span className="shrink-0" style={{ fontSize: "0.7rem" }}>변경</span>
         </button>
       )}
 

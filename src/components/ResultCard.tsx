@@ -147,12 +147,12 @@ export default function ResultCard({ result, pm25, stationName, isMock, temp, hu
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-5">
-        <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
+      <div className="flex items-center justify-between gap-2 mb-5">
+        <span className="text-sm truncate" style={{ color: "var(--text-secondary)" }}>
           PM2.5 {pm25} ㎍/㎥{stationName ? ` (${stationName})` : ""}
         </span>
         <span
-          className="text-xs font-bold px-2.5 py-1 rounded-full"
+          className="text-xs font-bold px-2.5 py-1 rounded-full shrink-0"
           style={{ color: cfg.color, border: `1px solid ${cfg.color}`, background: "transparent" }}
         >
           {cfg.label}
