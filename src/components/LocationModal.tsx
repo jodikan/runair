@@ -23,9 +23,6 @@ declare global {
 }
 
 export default function LocationModal({ isOpen, onClose, onConfirm, current }: Props) {
-  const mapRef        = useRef<HTMLDivElement>(null);
-  const mapInstance   = useRef<any>(null);
-  const markerRef     = useRef<any>(null);
   const pendingSearch = useRef<string | null>(null);
 
   const [query, setQuery]           = useState("");
@@ -34,7 +31,6 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
   const [sdkReady, setSdkReady]     = useState(false);
   const [gpsLoading, setGpsLoading] = useState(false);
   const [showBelow, setShowBelow]   = useState(false); // 검색 후 하단 영역 표시
-  const [mapReady, setMapReady]     = useState(false); // 지도 div 마운트 완료
 
   // SDK 로드
   useEffect(() => {
@@ -63,42 +59,11 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
     pendingSearch.current = null;
   }, [sdkReady]);
 
-  // 지도 초기화 — mapReady(div 마운트) + sdkReady 둘 다 준비됐을 때
-  useEffect(() => {
-    if (!sdkReady || !mapReady || !mapRef.current || mapInstance.current) return;
-
-    const center = selected
-      ? new window.kakao.maps.LatLng(selected.lat, selected.lng)
-      : new window.kakao.maps.LatLng(37.5665, 126.9780);
-
-    const map = new window.kakao.maps.Map(mapRef.current, { center, level: 4 });
-    mapInstance.current = map;
-    if (selected) placeMarker(selected.lat, selected.lng, map);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sdkReady, mapReady]);
-
-  // showBelow가 true가 되면 지도 div가 마운트됨 → mapReady를 다음 tick에 true로
-  useEffect(() => {
-    if (!showBelow) return;
-    const id = setTimeout(() => setMapReady(true), 0);
-    return () => clearTimeout(id);
-  }, [showBelow]);
-
   function doSearch(q: string) {
     const ps = new window.kakao.maps.services.Places();
     ps.keywordSearch(q, (data: any[], status: string) => {
       setResults(status === window.kakao.maps.services.Status.OK ? data.slice(0, 5) : []);
     });
-  }
-
-  function placeMarker(lat: number, lng: number, map?: any) {
-    const m = map ?? mapInstance.current;
-    if (!m) return;
-    const pos = new window.kakao.maps.LatLng(lat, lng);
-    if (markerRef.current) markerRef.current.setMap(null);
-    const marker = new window.kakao.maps.Marker({ position: pos, map: m });
-    markerRef.current = marker;
-    m.setCenter(pos);
   }
 
   function handleSearch() {
@@ -119,7 +84,6 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
     setSelected(loc);
     setResults([]);
     setQuery(place.place_name);
-    placeMarker(lat, lng);
   }
 
   function handleGps() {
@@ -130,7 +94,6 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
       (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
-        placeMarker(lat, lng);
 
         // 역지오코딩으로 실제 지역명 조회
         if (sdkReady && window.kakao?.maps?.services) {
@@ -254,13 +217,6 @@ export default function LocationModal({ isOpen, onClose, onConfirm, current }: P
                       ))}
                     </ul>
                   )}
-
-                  {/* 지도 */}
-                  <div
-                    ref={mapRef}
-                    className="w-full rounded-xl overflow-hidden"
-                    style={{ height: 220, background: "var(--bg)", border: "1px solid var(--border)" }}
-                  />
 
                   {/* 선택된 위치 */}
                   {selected && (
